@@ -1,13 +1,12 @@
 debian = {
-    "project": "None"
+    "project": "successful ：model is running"
 }
 
 def produce(action_name):
-    global factory
+    global debian
     try:
-        handler = debian[action_name]
-        handler.action = action_name
+        handler = debian.get(action_name)
     except KeyError as e:
         print(str(e))
-        handler = "KeyError"
+        handler = "NotFindModel"
     return handler

@@ -4,7 +4,7 @@ import os
 import sys
 from datetime import datetime
 import flask
-from flask import jsonify
+from handler import handlerdb
 
 App = flask.Flask(__name__)
 App.secret_key = os.urandom(24)
@@ -28,12 +28,14 @@ def home():
         print(f"req_cookie:{req_cookie}")
         print(f"req_form:{req_form}")
         print(f"req_file:{req_file}")
-        print(f"req_json:{req_json}")
+        print(f"req_json:{req_json};{type(req_json)}")
+        action_name = str(req_json.get("Action"))
+        handler_class = handlerdb.produce(action_name)
 
     except Exception as e:
-        response = "Exception Error!"
         print("Exception Error!!")
-    return response
+        return str(e)
+    return handler_class
 
 
 if __name__ == '__main__':
